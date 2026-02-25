@@ -14,10 +14,7 @@ header {
   border-bottom: 3px solid #00ffcc;
 }
 
-header h1 {
-  font-size: 36px;
-  color: #00ffcc;
-}
+header h1 { font-size: 36px; color: #00ffcc; }
 
 .user-menu button {
   margin-left: 10px;
@@ -28,10 +25,7 @@ header h1 {
   cursor: pointer;
 }
 
-main {
-  padding: 20px;
-  text-align: center;
-}
+main { padding: 20px; text-align: center; }
 
 .games-menu button {
   margin: 10px;
@@ -43,19 +37,8 @@ main {
   font-weight: bold;
 }
 
-canvas {
-  background: #222;
-  margin-top: 20px;
-  border: 3px solid #00ffcc;
-}
+canvas { background: #222; margin-top: 20px; border: 3px solid #00ffcc; }
 
-.multi-games {
-  margin-top: 30px;
-}
+.multi-games { margin-top: 30px; }
 
-#gamesList {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-}
+#gamesList { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
