@@ -11,12 +11,17 @@
 <p>La plateforme de jeux générés par IA</p>
 
 <div class="menu">
+  <button onclick="register()">Créer compte</button>
+  <button onclick="login()">Connexion</button>
   <button onclick="startGame()">Jouer</button>
   <button onclick="changeSkin()">Changer Skin</button>
+  <button onclick="generateGame()">Créer jeu IA</button>
 </div>
 
 <canvas id="gameCanvas" width="900" height="500"></canvas>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+<script src="supabase.js"></script>
 <script src="game.js"></script>
 
 </body>
