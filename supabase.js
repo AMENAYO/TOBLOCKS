@@ -29,7 +29,6 @@ async function logout() {
 async function loadSkins() {
   const user = supabase.auth.user();
   if(!user) return [];
-
   const { data, error } = await supabase.from("skins").select("*").eq("user_id", user.id);
   if(error) console.error(error);
   return data || [];
