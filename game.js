@@ -1,17 +1,22 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-let currentGameCode = ""; // Code du jeu chargé dynamiquement
+let currentGameCode = "";
 
+// Lancer le jeu sélectionné
 function startGame() {
   if(currentGameCode) {
-    loadGameFromCode(currentGameCode);
-  } else {
-    alert("Aucun jeu sélectionné.");
-  }
+    const old = document.getElementById("dynamicGame");
+    if(old) old.remove();
+
+    const script = document.createElement("script");
+    script.id = "dynamicGame";
+    script.textContent = currentGameCode;
+    document.body.appendChild(script);
+  } else alert("Aucun jeu sélectionné.");
 }
 
-// Charger un jeu depuis Supabase
+// Charger la liste des jeux depuis Supabase
 async function loadGamesList() {
   const { data, error } = await supabase.from("games").select("*");
   if(error) return console.error(error);
@@ -24,17 +29,16 @@ async function loadGamesList() {
     btn.textContent = game.name;
     btn.onclick = () => {
       currentGameCode = game.code;
-      loadGameFromCode(game.code);
+      startGame();
     };
     container.appendChild(btn);
   });
 }
 
-// Au chargement
 loadGamesList();
 
+// Changer skin (placeholder)
 function changeSkin() {
-  // Exemple : changer couleur du player (placeholder)
   const colors = ["red","blue","green","yellow","purple","orange"];
   ctx.fillStyle = colors[Math.floor(Math.random()*colors.length)];
 }
