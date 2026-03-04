@@ -38,3 +38,9 @@ function gainXP(amount) {
 
   localStorage.setItem("toblocks_level", playerLevel);
 }
+function attack(scene, player){
+
+  if(boss && player.position.distanceTo(boss.position) < 10){
+    damageBoss(20);
+  }
+}
