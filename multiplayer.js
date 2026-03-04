@@ -13,3 +13,23 @@ function sendPosition(player){
     z: player.position.z
   }));
 }
+let socket;
+
+function startHost(){
+
+  socket = new WebSocket("ws://localhost:8080");
+
+  socket.onmessage = (event)=>{
+    let data = JSON.parse(event.data);
+    updateOtherPlayer(data);
+  };
+}
+
+function sendPosition(player){
+  if(socket){
+    socket.send(JSON.stringify({
+      x: player.position.x,
+      z: player.position.z
+    }));
+  }
+}
