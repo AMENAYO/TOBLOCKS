@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Toblocks V2</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>TOBLOCKS</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🧱 Toblocks</h1>
-
-<div id="camera">
-    <div id="world">
-        <div id="player"></div>
-    </div>
+<div id="menu">
+  <h1>TOBLOCKS</h1>
+  <input id="username" placeholder="Username">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="register()">Créer compte</button>
+  <button onclick="login()">Login</button>
 </div>
 
-<div id="ui">
-    <p>⛏ Minerais: <span id="ore">0</span></p>
-    <p>🍎 Fruits: <span id="fruitCount">0</span></p>
-    <p>⚔ Épée: <span id="sword">Non</span></p>
-    <p>⭐ XP: <span id="xp">0</span></p>
-    <button onclick="craftSword()">Crafter Épée (10 minerais)</button>
-    <button onclick="changeSkin()">Changer Skin</button>
-</div>
+<canvas id="game"></canvas>
 
-<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.158/build/three.min.js"></script>
+<script src="game.js"></script>
 </body>
 </html>
