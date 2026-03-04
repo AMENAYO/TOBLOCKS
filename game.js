@@ -108,3 +108,15 @@ function startGame(data) {
 
   animate();
 }
+generateWorld(scene);
+createUI();
+
+document.addEventListener("click", ()=>{
+  attack(scene, player);
+});
+
+document.addEventListener("keydown",(e)=>{
+  if(e.key==="Shift"){
+    attack(scene, player);
+  }
+});
