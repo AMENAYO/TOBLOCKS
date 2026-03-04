@@ -1,35 +1,21 @@
 body {
-    background: linear-gradient(#111,#222);
-    color: white;
-    text-align: center;
-    font-family: Arial;
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial;
+  background: black;
 }
 
-#camera {
-    width: 600px;
-    height: 400px;
-    margin: auto;
-    overflow: hidden;
-    border: 3px solid white;
+#menu {
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  background: rgba(0,0,0,0.8);
+  padding: 20px;
+  color: white;
+  border-radius: 10px;
 }
 
-#world {
-    width: 2000px;
-    height: 2000px;
-    position: relative;
-    background: #2e2e2e;
+button {
+  margin-top: 10px;
+  width: 100%;
 }
-
-#player {
-    width: 40px;
-    height: 40px;
-    background: cyan;
-    position: absolute;
-}
-
-.ore { width: 25px; height: 25px; background: gray; position: absolute; }
-.fruit { width: 25px; height: 25px; background: red; position: absolute; }
-.mob { width: 35px; height: 35px; background: crimson; position: absolute; }
-
-.rare { box-shadow: 0 0 15px gold; }
-.legendary { box-shadow: 0 0 25px purple; }
