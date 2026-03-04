@@ -14,3 +14,24 @@ function createUI(){
 
   document.body.appendChild(ui);
 }
+function createBossBar(){
+
+  const bar = document.createElement("div");
+  bar.id = "bossbar";
+  bar.style.position = "absolute";
+  bar.style.top = "10px";
+  bar.style.left = "50%";
+  bar.style.transform = "translateX(-50%)";
+  bar.style.width = "400px";
+  bar.style.height = "20px";
+  bar.style.background = "black";
+
+  const life = document.createElement("div");
+  life.id = "bosslife";
+  life.style.height = "100%";
+  life.style.background = "red";
+  life.style.width = "100%";
+
+  bar.appendChild(life);
+  document.body.appendChild(bar);
+}
