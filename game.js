@@ -1,44 +1,110 @@
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+let currentUser = null;
 
-let currentGameCode = "";
+// =======================
+// SYSTEME COMPTES LOCAL
+// =======================
 
-// Lancer le jeu sélectionné
-function startGame() {
-  if(currentGameCode) {
-    const old = document.getElementById("dynamicGame");
-    if(old) old.remove();
+function register() {
+  let username = document.getElementById("username").value;
+  let password = document.getElementById("password").value;
 
-    const script = document.createElement("script");
-    script.id = "dynamicGame";
-    script.textContent = currentGameCode;
-    document.body.appendChild(script);
-  } else alert("Aucun jeu sélectionné.");
+  let users = JSON.parse(localStorage.getItem("toblocks_users")) || {};
+
+  if (users[username]) {
+    alert("Utilisateur existe !");
+    return;
+  }
+
+  users[username] = {
+    password: password,
+    x: 0,
+    y: 2,
+    z: 0,
+    level: 1,
+    skin: "default"
+  };
+
+  localStorage.setItem("toblocks_users", JSON.stringify(users));
+  alert("Compte créé !");
 }
 
-// Charger la liste des jeux depuis Supabase
-async function loadGamesList() {
-  const { data, error } = await supabase.from("games").select("*");
-  if(error) return console.error(error);
+function login() {
+  let username = document.getElementById("username").value;
+  let password = document.getElementById("password").value;
 
-  const container = document.getElementById("gamesList");
-  container.innerHTML = "";
+  let users = JSON.parse(localStorage.getItem("toblocks_users")) || {};
 
-  data.forEach(game => {
-    const btn = document.createElement("button");
-    btn.textContent = game.name;
-    btn.onclick = () => {
-      currentGameCode = game.code;
-      startGame();
-    };
-    container.appendChild(btn);
+  if (!users[username] || users[username].password !== password) {
+    alert("Erreur login");
+    return;
+  }
+
+  currentUser = username;
+  document.getElementById("menu").style.display = "none";
+  startGame(users[username]);
+}
+
+// =======================
+// JEU 3D
+// =======================
+
+function startGame(data) {
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({canvas: document.getElementById("game")});
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const light = new THREE.DirectionalLight(0xffffff, 1);
+  light.position.set(10, 20, 10);
+  scene.add(light);
+
+  camera.position.z = 10;
+
+  // Île stylée
+  const island = new THREE.Mesh(
+    new THREE.BoxGeometry(50, 2, 50),
+    new THREE.MeshStandardMaterial({color: 0x2ecc71})
+  );
+  scene.add(island);
+
+  // Eau
+  const water = new THREE.Mesh(
+    new THREE.BoxGeometry(200, 1, 200),
+    new THREE.MeshStandardMaterial({color: 0x3498db})
+  );
+  water.position.y = -2;
+  scene.add(water);
+
+  // Joueur
+  const player = new THREE.Mesh(
+    new THREE.BoxGeometry(1,2,1),
+    new THREE.MeshStandardMaterial({color: 0xff0000})
+  );
+  player.position.set(data.x, data.y, data.z);
+  scene.add(player);
+
+  document.addEventListener("keydown", (e)=>{
+    if(e.key==="z") player.position.z -= 1;
+    if(e.key==="s") player.position.z += 1;
+    if(e.key==="q") player.position.x -= 1;
+    if(e.key==="d") player.position.x += 1;
+
+    savePlayer(player);
   });
-}
 
-loadGamesList();
+  function savePlayer(p){
+    let users = JSON.parse(localStorage.getItem("toblocks_users"));
+    users[currentUser].x = p.position.x;
+    users[currentUser].y = p.position.y;
+    users[currentUser].z = p.position.z;
+    localStorage.setItem("toblocks_users", JSON.stringify(users));
+  }
 
-// Changer skin (placeholder)
-function changeSkin() {
-  const colors = ["red","blue","green","yellow","purple","orange"];
-  ctx.fillStyle = colors[Math.floor(Math.random()*colors.length)];
+  function animate(){
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+
+  animate();
 }
